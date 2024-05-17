@@ -13,17 +13,18 @@ class Board extends JPanel implements ActionListener, KeyListener {
     time = new Timer(10, this);
     setFocusable(true);
     addKeyListener(this);
-    ball = new Ball(200, 300, new Geometry(25, Geometry.Shape.CIRCLE));
-    paddle = new Paddle(350, 950, new Geometry(100, 25, Geometry.Shape.RECTANGLE));
+    ball = new Ball(200, 300, new Geometry(25, 15));
+    paddle = new Paddle(350, 950, new Geometry(100, 100));
     bricks = new ArrayList<Brick>();
-    initializeBricks(8, 16, 50, 15);
+    initializeBricks(8, 16, 75, 30);
     time.start();
   }
 
   private void initializeBricks(int rows, int collumns, int width, int height) {
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < collumns; j++) {
-        bricks.add(new Brick(50 + j * 70, 50 + i * 30, new Geometry(width, height, Geometry.Shape.RECTANGLE)));
+        bricks.add(
+            new Brick(j * width, i * height, new Geometry(width, height)));
       }
     }
   }

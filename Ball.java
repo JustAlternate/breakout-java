@@ -12,8 +12,7 @@ class Ball extends MovingEntity {
   // We want to make the ball able to to bounce of of top, right
   // and left walls.
   public void checkCollision() {
-    // TODO: find a way to make the window size accessible here.
-    if (geometry.rect.x <= 0 || geometry.rect.x + geometry.width >= 1200) {
+    if (geometry.rect.x <= 0 || geometry.rect.x + geometry.width >= Constant.width) {
       dx = -dx;
     }
     if (geometry.rect.y + geometry.height <= 0) {
@@ -33,7 +32,8 @@ class Ball extends MovingEntity {
       if (brick.geometry.rect.intersects(this.geometry.rect)) {
         // If it collide with a brick we change the ball direction.
         changeDirection(brick.geometry.rect);
-        brick.destroy();
+        // And we remove the brick collided from the bricks ArrayList
+        bricks.remove(brick);
         break;
       }
     }
@@ -49,8 +49,7 @@ class Ball extends MovingEntity {
     int deltaX = ballCenterX - collidedObjectCenterX;
     int deltaY = ballCenterY - collidedObjectCenterY;
 
-    // Change direction of the ball corresponding to the newly calculated projected
-    // vector
+    // Change direction of the ball corresponding to the newly calculated vector.
     dx = Math.signum(deltaX);
     dy = Math.signum(deltaY);
 

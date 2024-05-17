@@ -11,9 +11,8 @@ class Paddle extends MovingEntity {
     }
   }
 
-  // TODO: find a way to make the window size accessible here.
   public void moveRight() {
-    if (geometry.rect.x + geometry.width < 1200) {
+    if (geometry.rect.x + geometry.width < Constant.width) {
       dx = 1;
       move();
     }
