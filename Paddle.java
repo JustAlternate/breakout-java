@@ -1,7 +1,7 @@
 class Paddle extends MovingEntity {
   public Paddle(int x, int y, Geometry geometry) {
     super(x, y, geometry);
-    speed = 8;
+    speed = 50;
   }
 
   public void moveLeft() {

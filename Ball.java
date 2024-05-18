@@ -6,7 +6,7 @@ class Ball extends MovingEntity {
     super(x, y, geometry);
     dx = 1.0;
     dy = -0.5;
-    speed = 1;
+    speed = 5;
   }
 
   // We want to make the ball able to to bounce of of top, right
@@ -18,6 +18,10 @@ class Ball extends MovingEntity {
     if (geometry.rect.y + geometry.height <= 0) {
       dy = -dy;
     }
+  }
+
+  public boolean checkDeath() {
+    return geometry.rect.y + geometry.height > Constant.height;
   }
 
   public void checkCollision(Paddle paddle) {
@@ -41,13 +45,13 @@ class Ball extends MovingEntity {
 
   public void changeDirection(Rectangle collidedObjectRect) {
     // Calculate the center of the ball and the brick
-    int ballCenterX = geometry.rect.x + geometry.width / 2;
-    int ballCenterY = geometry.rect.y + geometry.height / 2;
-    int collidedObjectCenterX = collidedObjectRect.x + collidedObjectRect.width / 2;
-    int collidedObjectCenterY = collidedObjectRect.y + collidedObjectRect.height / 2;
+    double ballCenterX = geometry.rect.getCenterX();
+    double ballCenterY = geometry.rect.getCenterY();
+    double collidedObjectCenterX = collidedObjectRect.getCenterX();
+    double collidedObjectCenterY = collidedObjectRect.getCenterY();
 
-    int deltaX = ballCenterX - collidedObjectCenterX;
-    int deltaY = ballCenterY - collidedObjectCenterY;
+    double deltaX = ballCenterX - collidedObjectCenterX;
+    double deltaY = ballCenterY - collidedObjectCenterY;
 
     // Change direction of the ball corresponding to the newly calculated vector.
     dx = Math.signum(deltaX);

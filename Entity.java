@@ -9,7 +9,7 @@ class Entity {
     geometry.rect.y = y;
   }
 
-  public void draw(Graphics g) {
+  public void draw(Graphics2D g) {
     geometry.draw(g);
   }
 }

@@ -9,22 +9,39 @@ class Board extends JPanel implements ActionListener, KeyListener {
   Paddle paddle;
   ArrayList<Brick> bricks;
 
+  int turn = 1;
+  int screen = 1;
+  int score = 0;
+
   public Board() {
     time = new Timer(10, this);
     setFocusable(true);
     addKeyListener(this);
-    ball = new Ball(200, 300, new Geometry(25, 15));
-    paddle = new Paddle(350, 950, new Geometry(100, 100));
+    ball = spawnBall();
+    paddle = new Paddle(350, 950, new Geometry(70, 20, Color.CYAN));
     bricks = new ArrayList<Brick>();
-    initializeBricks(8, 16, 75, 30);
+    initializeBricks();
+    setBackground(Color.BLACK);
     time.start();
   }
 
-  private void initializeBricks(int rows, int collumns, int width, int height) {
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < collumns; j++) {
+  private Ball spawnBall() {
+    return new Ball(200, 300, new Geometry(25, 15, Color.WHITE));
+  }
+
+  private void initializeBricks() {
+    Color[] Colors = {
+        Color.RED,
+        Color.ORANGE,
+        Color.GREEN,
+        Color.YELLOW,
+    };
+
+    for (int i = 0; i < 8; i++) {
+      Color c = Colors[i / 2];
+      for (int j = 0; j < 16; j++) {
         bricks.add(
-            new Brick(j * width, i * height, new Geometry(width, height)));
+            new Brick(5 + j * (65 + 10), 120 + i * (20 + 10), new Geometry(65, 20, c)));
       }
     }
   }
@@ -37,16 +54,35 @@ class Board extends JPanel implements ActionListener, KeyListener {
     ball.checkCollision();
     ball.checkCollision(paddle);
     ball.checkCollision(bricks);
+    if (ball.checkDeath()) {
+      LostBall();
+    }
+
+    System.out.println(bricks.size());
+    if (bricks.size() == 0 && screen < 2) {
+      initializeBricks();
+      spawnBall();
+      screen++;
+    }
+
     repaint();
+  }
+
+  private void LostBall() {
+    if (turn < 300) {
+      turn++;
+      ball = spawnBall();
+    }
   }
 
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
-    ball.draw(g);
-    paddle.draw(g);
+    Graphics2D g2 = (Graphics2D) g;
+    ball.draw(g2);
+    paddle.draw(g2);
     for (Brick brick : bricks) {
-      brick.draw(g);
+      brick.draw(g2);
     }
   }
 
