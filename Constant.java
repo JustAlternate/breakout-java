@@ -1,7 +1,8 @@
 public final class Constant {
 
-  public static int width = 1200;
-  public static int height = 1000;
+  // We create static variable which will act as constant.
+  public static int WIDTH = 1200;
+  public static int HEIGHT = 1000;
 
   private Constant() {
   };

@@ -4,7 +4,7 @@ import java.awt.*;
 class Window extends JFrame {
   public Window(Board board) {
     setTitle("JustAlternate's Breakout Game");
-    setSize(Constant.width, Constant.height);
+    setSize(Constant.WIDTH, Constant.HEIGHT);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setLocationRelativeTo(null);
     setResizable(false);

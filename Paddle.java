@@ -12,7 +12,7 @@ class Paddle extends MovingEntity {
   }
 
   public void moveRight() {
-    if (geometry.rect.x + geometry.width < Constant.width) {
+    if (geometry.rect.x + geometry.width < Constant.WIDTH) {
       dx = 1;
       move();
     }

@@ -12,7 +12,7 @@ class Ball extends MovingEntity {
   // We want to make the ball able to to bounce of of top, right
   // and left walls.
   public void checkCollision() {
-    if (geometry.rect.x <= 0 || geometry.rect.x + geometry.width >= Constant.width) {
+    if (geometry.rect.x <= 0 || geometry.rect.x + geometry.width >= Constant.WIDTH) {
       dx = -dx;
     }
     if (geometry.rect.y + geometry.height <= 0) {
@@ -21,7 +21,7 @@ class Ball extends MovingEntity {
   }
 
   public boolean checkDeath() {
-    return geometry.rect.y + geometry.height > Constant.height;
+    return geometry.rect.y + geometry.height > Constant.HEIGHT;
   }
 
   public void checkCollision(Paddle paddle) {
