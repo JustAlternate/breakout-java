@@ -1,20 +1,6 @@
-class Paddle extends MovingEntity {
+// Paddle doesnt implement MovingEntity because it has a special way of moving using mouse event.
+class Paddle extends Entity {
   public Paddle(int x, int y, Geometry geometry) {
     super(x, y, geometry);
-    speed = 50;
-  }
-
-  public void moveLeft() {
-    if (geometry.rect.x > 0) {
-      dx = -1;
-      move();
-    }
-  }
-
-  public void moveRight() {
-    if (geometry.rect.x + geometry.width < Constant.WIDTH) {
-      dx = 1;
-      move();
-    }
   }
 }

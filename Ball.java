@@ -1,61 +1,93 @@
-import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
+import java.awt.Color;
 
-class Ball extends MovingEntity {
-  public Ball(int x, int y, Geometry geometry) {
+class Ball extends Entity implements MovingEntity {
+  float speed;
+  int hit;
+  double dx;
+  double dy;
+
+  // In classic arcade breakout the ball can destroy only one brick at a time
+  // between each paddle or wall collisions
+  boolean desactivate;
+
+  public Ball(int x, int y, Geometry geometry, float speed, double dx, double dy) {
     super(x, y, geometry);
-    dx = 1.0;
-    dy = -0.5;
-    speed = 5;
+    this.speed = speed;
+    this.dx = dx;
+    this.dy = dy;
   }
 
   // We want to make the ball able to to bounce of of top, right
   // and left walls.
   public void checkCollision() {
     if (geometry.rect.x <= 0 || geometry.rect.x + geometry.width >= Constant.WIDTH) {
+      desactivate = false;
       dx = -dx;
     }
     if (geometry.rect.y + geometry.height <= 0) {
+      desactivate = false;
       dy = -dy;
     }
   }
 
-  public boolean checkDeath() {
-    return geometry.rect.y + geometry.height > Constant.HEIGHT;
+  public void checkDeath() {
+    if (geometry.rect.y + geometry.height > Constant.HEIGHT) {
+      Board.LostBall();
+    }
   }
 
   public void checkCollision(Paddle paddle) {
     if (paddle.geometry.rect.intersects(this.geometry.rect)) {
       // If it collide with the paddle we change the ball direction
-      changeDirection(paddle.geometry.rect);
+      changeDirection(paddle);
+
+      desactivate = false;
     }
   }
 
-  public void checkCollision(ArrayList<Brick> bricks) {
-    for (Brick brick : bricks) {
-      if (brick.geometry.rect.intersects(this.geometry.rect)) {
-        // If it collide with a brick we change the ball direction.
-        changeDirection(brick.geometry.rect);
-        // And we remove the brick collided from the bricks ArrayList
-        bricks.remove(brick);
-        break;
+  public void checkCollision(List<Brick> bricks) {
+    if (!desactivate) {
+      for (Brick brick : bricks) {
+        if (brick.geometry.rect.intersects(this.geometry.rect)) {
+          desactivate = true;
+
+          // Update score with the points the brick made.
+          Board.score += Game.colorToPoints.get(brick.geometry.c);
+          hit++;
+          if (hit == 4 || hit == 12) {
+            speed++;
+          }
+          if (brick.geometry.c == Color.ORANGE || brick.geometry.c == Color.RED) {
+            speed += 0.2f;
+          }
+
+          // If it collide with a brick we change the ball direction.
+          changeDirection(brick);
+
+          bricks.remove(brick);
+          break;
+        }
       }
     }
   }
 
-  public void changeDirection(Rectangle collidedObjectRect) {
+  public void changeDirection(Paddle collidedObject) {
     // Calculate the center of the ball and the brick
     double ballCenterX = geometry.rect.getCenterX();
-    double ballCenterY = geometry.rect.getCenterY();
-    double collidedObjectCenterX = collidedObjectRect.getCenterX();
-    double collidedObjectCenterY = collidedObjectRect.getCenterY();
-
+    double collidedObjectCenterX = collidedObject.geometry.rect.getCenterX();
     double deltaX = ballCenterX - collidedObjectCenterX;
-    double deltaY = ballCenterY - collidedObjectCenterY;
-
-    // Change direction of the ball corresponding to the newly calculated vector.
+    // Push the ball to the right if it touches the right part of the paddle.
     dx = Math.signum(deltaX);
-    dy = Math.signum(deltaY);
+    dy = -dy;
+  }
 
+  public void changeDirection(Brick collidedObject) {
+    dy = -dy;
+  }
+
+  public void move() {
+    geometry.rect.x += dx * speed;
+    geometry.rect.y += dy * speed;
   }
 }

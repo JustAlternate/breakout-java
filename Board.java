@@ -1,32 +1,61 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.List;
 import java.util.ArrayList;
 
-class Board extends JPanel implements ActionListener, KeyListener {
+class Board extends JPanel implements ActionListener, MouseMotionListener {
   Timer time;
-  Ball ball;
+  static Ball ball;
   Paddle paddle;
-  ArrayList<Brick> bricks;
+  List<Brick> bricks;
 
-  int turn = 1;
-  int screen = 1;
-  int score = 0;
+  Label labelScore;
+  Label labelDummyScore2;
+  Label labelScreen;
+  Label labelBallUsed;
+
+  static int ballUsed = 1;
+  static int screen = 1;
+  static int score = 0;
 
   public Board() {
     time = new Timer(10, this);
     setFocusable(true);
-    addKeyListener(this);
+    setLayout(null);
+    addMouseMotionListener(this);
     ball = spawnBall();
     paddle = new Paddle(350, 950, new Geometry(70, 20, Color.CYAN));
     bricks = new ArrayList<Brick>();
+
+    labelScreen = new Label("1", 100, Color.WHITE, 50, 10, 100, 100);
+
+    labelScore = new Label("000", 100, Color.WHITE, 100, 110, 300, 100);
+    labelBallUsed = new Label("1", 100, Color.WHITE, 700, 10, 100, 100);
+
+    // This label is useless it's just here to recreate the original Arcade breakout
+    // 2nd player score
+    labelDummyScore2 = new Label("000", 100, Color.WHITE, 750, 110, 300, 100);
+
+    add(labelScore);
+    add(labelScreen);
+    add(labelBallUsed);
+    add(labelDummyScore2);
+
     initializeBricks();
     setBackground(Color.BLACK);
     time.start();
   }
 
-  private Ball spawnBall() {
-    return new Ball(200, 300, new Geometry(25, 15, Color.WHITE));
+  static public Ball spawnBall() {
+    return new Ball(200, 500, new Geometry(25, 15, Color.WHITE), 3f, 1d, 1d);
+  }
+
+  static public void LostBall() {
+    if (ballUsed < 3) {
+      ballUsed++;
+      ball = spawnBall();
+    }
   }
 
   private void initializeBricks() {
@@ -41,66 +70,59 @@ class Board extends JPanel implements ActionListener, KeyListener {
       Color c = Colors[i / 2];
       for (int j = 0; j < 16; j++) {
         bricks.add(
-            new Brick(5 + j * (65 + 10), 120 + i * (20 + 10), new Geometry(65, 20, c)));
+            new Brick(2 + j * (70 + 5), 200 + i * (20 + 5), new Geometry(70, 20, c)));
       }
     }
   }
 
+  public void resetBoard() {
+    initializeBricks();
+    spawnBall();
+    score = 0;
+    ballUsed = 1;
+    screen++;
+    labelScreen.setText(String.format("%d", screen));
+  }
+
   @Override
   public void actionPerformed(ActionEvent e) {
-    // Make the ball move.
     ball.move();
+
     // Make the ball collision to walls, paddle and bricks.
     ball.checkCollision();
     ball.checkCollision(paddle);
     ball.checkCollision(bricks);
-    if (ball.checkDeath()) {
-      LostBall();
-    }
 
-    System.out.println(bricks.size());
+    ball.checkDeath();
+
     if (bricks.size() == 0 && screen < 2) {
-      initializeBricks();
-      spawnBall();
-      screen++;
+      resetBoard();
     }
-
     repaint();
-  }
 
-  private void LostBall() {
-    if (turn < 300) {
-      turn++;
-      ball = spawnBall();
-    }
+    // Update game labels
+    labelScore.setText(String.format("%03d", score));
+    labelBallUsed.setText(String.format("%d", ballUsed));
   }
 
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
     Graphics2D g2 = (Graphics2D) g;
-    ball.draw(g2);
-    paddle.draw(g2);
     for (Brick brick : bricks) {
       brick.draw(g2);
     }
+    paddle.draw(g2);
+    ball.draw(g2);
   }
 
   @Override
-  public void keyPressed(KeyEvent e) {
-    int key = e.getKeyCode();
-    if (key == KeyEvent.VK_LEFT) {
-      paddle.moveLeft();
-    } else if (key == KeyEvent.VK_RIGHT) {
-      paddle.moveRight();
-    }
+  public void mouseMoved(MouseEvent e) {
+    int mouseX = e.getX();
+    paddle.geometry.rect.x = mouseX - paddle.geometry.width / 2;
   }
 
   @Override
-  public void keyReleased(KeyEvent e) {
-  }
-
-  @Override
-  public void keyTyped(KeyEvent e) {
+  public void mouseDragged(MouseEvent e) {
   }
 }
