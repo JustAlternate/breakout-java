@@ -16,6 +16,7 @@ class Label extends JLabel {
       this.setFont(ArcadeFont);
     } catch (FontFormatException | IOException e) {
       System.err.print("Error when trying to open font file: " + e);
+      // TODO : Make good error catching
     }
 
   }

@@ -5,6 +5,12 @@ public class Game {
   Window window;
   Board board;
 
+  // Create static variables for in game variables
+  // I didn't put them in my Constant class cause they are not final.
+  static int ballUsed = 0;
+  static int screen = 1;
+  static int score = 0;
+
   // Create a hashmap to link each color to points gained.
   public static final Map<Color, Integer> colorToPoints = new HashMap<Color, Integer>();
   static {

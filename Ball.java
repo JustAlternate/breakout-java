@@ -8,7 +8,7 @@ class Ball extends Entity implements MovingEntity {
   double dy;
 
   // In classic arcade breakout the ball can destroy only one brick at a time
-  // between each paddle or wall collisions
+  // between each paddle or wall collisions.
   boolean desactivate;
 
   public Ball(int x, int y, Geometry geometry, float speed, double dx, double dy) {
@@ -21,19 +21,18 @@ class Ball extends Entity implements MovingEntity {
   // We want to make the ball able to to bounce of of top, right
   // and left walls.
   public void checkCollision() {
+
+    // Ball hit left or right wall
     if (geometry.rect.x <= 0 || geometry.rect.x + geometry.width >= Constant.WIDTH) {
       desactivate = false;
       dx = -dx;
     }
+
+    // Ball hit roof
     if (geometry.rect.y + geometry.height <= 0) {
+      Board.scalePaddle(0.5f);
       desactivate = false;
       dy = -dy;
-    }
-  }
-
-  public void checkDeath() {
-    if (geometry.rect.y + geometry.height > Constant.HEIGHT) {
-      Board.LostBall();
     }
   }
 
@@ -53,7 +52,7 @@ class Ball extends Entity implements MovingEntity {
           desactivate = true;
 
           // Update score with the points the brick made.
-          Board.score += Game.colorToPoints.get(brick.geometry.c);
+          Game.score += Game.colorToPoints.get(brick.geometry.c);
           hit++;
           if (hit == 4 || hit == 12) {
             speed++;
