@@ -11,7 +11,7 @@ class Label extends JLabel {
     this.setBounds(x, y, w, h);
 
     try {
-      ArcadeFont = Font.createFont(Font.TRUETYPE_FONT, new File("Arcade.ttf"));
+      ArcadeFont = Font.createFont(Font.TRUETYPE_FONT, new File("../res/Arcade.ttf"));
       ArcadeFont = ArcadeFont.deriveFont(Font.BOLD, fontSize);
       this.setFont(ArcadeFont);
     } catch (FontFormatException | IOException e) {
