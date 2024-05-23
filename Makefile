@@ -1,34 +1,28 @@
-# Define the compiler
 JAVAC = javac
 
-# Define the flags
-JFLAGS = -g
-
-# Define the source directories
 SRCDIR = src
 BINDIR = bin
 
-# Define the source files
 SOURCES = $(shell find $(SRCDIR) -name '*.java')
 
-# Define the class files
 CLASSES = $(patsubst $(SRCDIR)/%.java, $(BINDIR)/%.class, $(SOURCES))
 
-# Define the main class
-MAIN = Game
+all: build run
 
-# Compile Java source files
-all: $(CLASSES)
+####################################
+# /!\ known bug: always recompile everything when 'make build'. 
+build: $(CLASSES)
 
 $(BINDIR)/%.class: $(SRCDIR)/%.java
-	$(JAVAC) $(JFLAGS) -d $(BINDIR) $<
+	$(JAVAC) -d $(BINDIR) $<
+####################################
 
-# Run the Java program
-run: classes
-	cd $(BINDIR)
-	java $(BINDIR) $(MAIN)
-	cd ../
+# Run the project.
+run:
+	java -cp bin src.main.Game
 
-# Clean up generated files
+# Clean classes files.
 clean:
-	rm -rf $(BINDIR)
+	find $(BINDIR) -name \*.class -type f -delete
+
+clear: clean
