@@ -1,7 +1,10 @@
-import java.awt.*;
+package src.entities;
 
-class Entity {
-  Geometry geometry;
+import java.awt.*;
+import src.visuals.Geometry;
+
+public class Entity {
+  public Geometry geometry;
 
   public Entity(int x, int y, Geometry geometry) {
     this.geometry = geometry;

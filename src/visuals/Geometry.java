@@ -1,10 +1,12 @@
+package src.visuals;
+
 import java.awt.*;
 
 public class Geometry {
-  float width;
-  float height;
-  Rectangle rect;
-  Color c;
+  public float width;
+  public float height;
+  public Rectangle rect;
+  public Color c;
 
   public Geometry(float width, float height, Color c) {
     this.width = width;

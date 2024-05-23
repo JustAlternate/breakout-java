@@ -1,7 +1,13 @@
-import java.util.*;
-import java.awt.Color;
+package src.entities;
 
-class Ball extends Entity implements MovingEntity {
+import java.awt.Color;
+import java.util.List;
+
+import src.visuals.Geometry;
+import src.main.*;
+import src.utils.*;
+
+public class Ball extends Entity implements MovingEntity {
   float speed;
   int hit;
   double dx;
@@ -21,7 +27,6 @@ class Ball extends Entity implements MovingEntity {
   // We want to make the ball able to to bounce of of top, right
   // and left walls.
   public void checkCollision() {
-
     // Ball hit left or right wall
     if (geometry.rect.x <= 0 || geometry.rect.x + geometry.width >= Constant.WIDTH) {
       desactivate = false;

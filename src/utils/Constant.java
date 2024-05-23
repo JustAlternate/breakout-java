@@ -1,3 +1,5 @@
+package src.utils;
+
 public final class Constant {
 
   // We create static final variable which will act as constant.

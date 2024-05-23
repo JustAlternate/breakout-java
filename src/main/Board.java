@@ -1,11 +1,21 @@
-import javax.swing.*;
-import java.awt.*;
+package src.main;
+
 import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import javax.swing.Timer;
+import javax.swing.JPanel;
 import java.util.List;
 import java.util.ArrayList;
 
-class Board extends JPanel implements ActionListener, MouseMotionListener {
-  Timer time;
+import src.entities.*;
+import src.utils.*;
+import src.visuals.Label;
+import src.visuals.Geometry;
+
+public class Board extends JPanel implements ActionListener, MouseMotionListener {
+  private Timer time;
   Ball ball;
   static Paddle paddle;
   List<Brick> bricks;

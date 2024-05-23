@@ -1,11 +1,13 @@
+package src.visuals;
+
 import javax.swing.JLabel;
 import java.awt.*;
 import java.io.*;
 
-class Label extends JLabel {
+public class Label extends JLabel {
   Font ArcadeFont;
 
-  Label(String text, int fontSize, Color c, int x, int y, int w, int h) {
+  public Label(String text, int fontSize, Color c, int x, int y, int w, int h) {
     super(text);
     this.setForeground(c);
     this.setBounds(x, y, w, h);
@@ -18,6 +20,5 @@ class Label extends JLabel {
       System.err.print("Error when trying to open font file: " + e);
       // TODO : Make good error catching
     }
-
   }
 }
