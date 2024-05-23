@@ -3,14 +3,10 @@ package src.visuals;
 import java.awt.*;
 
 public class Geometry {
-  public float width;
-  public float height;
   public Rectangle rect;
   public Color c;
 
   public Geometry(float width, float height, Color c) {
-    this.width = width;
-    this.height = height;
     this.c = c;
 
     // Initialize x and y coordinate to 0.
@@ -24,10 +20,10 @@ public class Geometry {
     int thickness = 10;
     Stroke oldStroke = g.getStroke();
     g.setStroke(new BasicStroke(thickness));
-    g.drawRect(rect.x, rect.y, (int) width, (int) height);
+    g.drawRect(rect.x, rect.y, rect.width, rect.height);
     g.setStroke(oldStroke);
     g.setColor(c);
-    g.fillRect(rect.x, rect.y, (int) width, (int) height);
+    g.fillRect(rect.x, rect.y, rect.width, rect.height);
     g.setColor(oldColor);
   }
 }

@@ -15,15 +15,17 @@ import src.visuals.Label;
 import src.visuals.Geometry;
 
 public class Board extends JPanel implements ActionListener, MouseMotionListener {
-  private Timer time;
-  Ball ball;
-  static Paddle paddle;
-  List<Brick> bricks;
+  protected static Paddle paddle;
 
-  Label labelScore;
-  Label labelDummyScore2;
-  Label labelScreen;
-  Label labelBallUsed;
+  protected Ball ball;
+  protected List<Brick> bricks;
+
+  private Label labelScore;
+  private Label labelDummyScore2;
+  private Label labelScreen;
+  private Label labelBallUsed;
+
+  private Timer time;
 
   public Board() {
     setFocusable(true);
@@ -54,16 +56,16 @@ public class Board extends JPanel implements ActionListener, MouseMotionListener
   }
 
   public static void scalePaddle(float factor) {
-    paddle.geometry.width = paddle.geometry.width * factor;
+    paddle.geometry.rect.width = (int) (paddle.geometry.rect.width * factor);
   }
 
-  public Ball recreateBall() {
+  private Ball recreateBall() {
     Game.ballUsed++;
     return new Ball(200, 500, new Geometry(25, 15, Color.WHITE), 3f, 1d, 1d);
   }
 
   private void checkBallDeath() {
-    if (ball.geometry.rect.y + ball.geometry.height > Constant.HEIGHT && Game.ballUsed < 3) {
+    if (ball.geometry.rect.y + ball.geometry.rect.height > Constant.HEIGHT && Game.ballUsed < 3) {
       // We recreate a new ball.
       ball = recreateBall();
     }
@@ -86,7 +88,7 @@ public class Board extends JPanel implements ActionListener, MouseMotionListener
     }
   }
 
-  public void resetBoard() {
+  private void resetBoard() {
     // We Update variables.
     Game.score = 0;
     Game.ballUsed = 0;
@@ -135,7 +137,7 @@ public class Board extends JPanel implements ActionListener, MouseMotionListener
   @Override
   public void mouseMoved(MouseEvent e) {
     int mouseX = e.getX();
-    paddle.geometry.rect.x = mouseX - (int) paddle.geometry.width / 2;
+    paddle.geometry.rect.x = mouseX - (int) paddle.geometry.rect.width / 2;
   }
 
   @Override

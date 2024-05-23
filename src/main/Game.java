@@ -4,8 +4,8 @@ import java.util.*;
 import java.awt.Color;
 
 public class Game {
-  Window window;
-  Board board;
+  protected Window window;
+  protected Board board;
 
   // Create static variables for in game variables
   // I didn't put them in my Constant class cause they are not final.
@@ -22,7 +22,7 @@ public class Game {
     colorToPoints.put(Color.RED, 7);
   }
 
-  public Game() {
+  protected Game() {
     board = new Board();
     window = new Window(board);
   }

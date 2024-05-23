@@ -5,7 +5,7 @@ import java.awt.*;
 import java.io.*;
 
 public class Label extends JLabel {
-  Font ArcadeFont;
+  protected Font ArcadeFont;
 
   public Label(String text, int fontSize, Color c, int x, int y, int w, int h) {
     super(text);
@@ -18,7 +18,6 @@ public class Label extends JLabel {
       this.setFont(ArcadeFont);
     } catch (FontFormatException | IOException e) {
       System.err.print("Error when trying to open font file: " + e);
-      // TODO : Make good error catching
     }
   }
 }

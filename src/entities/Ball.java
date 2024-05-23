@@ -8,14 +8,14 @@ import src.main.*;
 import src.utils.*;
 
 public class Ball extends Entity implements MovingEntity {
-  float speed;
-  int hit;
-  double dx;
-  double dy;
+  protected float speed;
+  protected int collided;
+  protected double dx;
+  protected double dy;
 
   // In classic arcade breakout the ball can destroy only one brick at a time
   // between each paddle or wall collisions.
-  boolean desactivate;
+  protected boolean desactivate;
 
   public Ball(int x, int y, Geometry geometry, float speed, double dx, double dy) {
     super(x, y, geometry);
@@ -27,14 +27,14 @@ public class Ball extends Entity implements MovingEntity {
   // We want to make the ball able to to bounce of of top, right
   // and left walls.
   public void checkCollision() {
-    // Ball hit left or right wall
-    if (geometry.rect.x <= 0 || geometry.rect.x + geometry.width >= Constant.WIDTH) {
+    // Ball collided left or right wall
+    if (geometry.rect.x <= 0 || geometry.rect.x + geometry.rect.width >= Constant.WIDTH) {
       desactivate = false;
       dx = -dx;
     }
 
-    // Ball hit roof
-    if (geometry.rect.y + geometry.height <= 0) {
+    // Ball collided roof
+    if (geometry.rect.y + geometry.rect.height <= 0) {
       Board.scalePaddle(0.5f);
       desactivate = false;
       dy = -dy;
@@ -58,8 +58,8 @@ public class Ball extends Entity implements MovingEntity {
 
           // Update score with the points the brick made.
           Game.score += Game.colorToPoints.get(brick.geometry.c);
-          hit++;
-          if (hit == 4 || hit == 12) {
+          collided++;
+          if (collided == 4 || collided == 12) {
             speed++;
           }
           if (brick.geometry.c == Color.ORANGE || brick.geometry.c == Color.RED) {
@@ -86,7 +86,7 @@ public class Ball extends Entity implements MovingEntity {
     dy = -dy;
   }
 
-  public void changeDirection(Brick collidedObject) {
+  private void changeDirection(Brick collidedObject) {
     dy = -dy;
   }
 
