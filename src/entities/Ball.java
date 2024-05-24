@@ -7,7 +7,7 @@ import src.visuals.Geometry;
 import src.main.*;
 import src.utils.*;
 
-public class Ball extends Entity implements MovingEntity {
+public class Ball extends Entity {
   protected float speed;
   protected int collided;
   protected double dx;

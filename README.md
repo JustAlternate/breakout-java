@@ -47,7 +47,6 @@ make run
     │   ├── Ball.java
     │   ├── Brick.java
     │   ├── Entity.java
-    │   ├── MovingEntity.java
     │   └── Paddle.java
     ├── main                    # main package (intelligence haut niveau, création de la fenetre, instanciation des objets...)
     │   ├── Board.java
