@@ -68,9 +68,9 @@ make run
 - [X] Créer un git pour le projet.
 - [X] Créer un premier schéma UML.
 - [X] Se familiariser avec le code PONG de TP.
-- [X] Créer une première fenetre avec swing et AWT graphics.
+- [X] Créer une première fenêtre avec swing et AWT graphics.
 - [X] Créer une balle qui rebondit sur les murs sauf le sol.
-- [X] Créer le Pallet.
+- [X] Créer le Palet.
 - [X] Créer le toit de Briques.
 - [X] Ajouter des collisions.
 - [X] Détruire les briques à l'impact.
@@ -79,10 +79,10 @@ make run
 - [X] Ajouter des Labels de textes.
 - [X] Changer la vitesse de la balle.
 - [X] Séparer le projet en plusieurs packages.
-- [X] Corriger les propriétés des classes, variables et méthodes (public, private protected).
-- [X] Créer un makefile pour compiler et lancé le projet.
+- [X] Corriger les propriétés des classes, variables et méthodes (public, private, protected).
+- [X] Créer un Makefile pour compiler et lancé le projet.
 - [X] Corriger le schéma UML.
-- [X] Ecrire une Documentation README.md.
+- [X] Écrire une Documentation README.md.
 - [X] Rendre le Projet.
 
 ## Images
