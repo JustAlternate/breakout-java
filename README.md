@@ -43,7 +43,7 @@ make run
 │   ├── screenshot2.png
 │   └── sreenshot1.png
 └── src                         # Codes source (.java)
-    ├── entities                # entities package ( objets affiché à l'écran)
+    ├── entities                # entities package (objets affichés à l'écran)
     │   ├── Ball.java
     │   ├── Brick.java
     │   ├── Entity.java
